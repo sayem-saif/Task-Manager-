@@ -7,21 +7,29 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import VerifyEmail from "./pages/VerifyEmail";
 
 const queryClient = new QueryClient();
 
 const App = () => {
+  const [authToken, setAuthToken] = useState<string | null>(
+    () => sessionStorage.getItem("authToken")
+  );
   const [studentName, setStudentName] = useState<string | null>(
     () => sessionStorage.getItem("studentName")
   );
 
-  const handleLogin = (name: string) => {
-    sessionStorage.setItem("studentName", name);
-    setStudentName(name);
+  const handleLogin = (token: string, userName: string) => {
+    sessionStorage.setItem("authToken", token);
+    sessionStorage.setItem("studentName", userName);
+    setAuthToken(token);
+    setStudentName(userName);
   };
 
   const handleLogout = () => {
+    sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("studentName");
+    setAuthToken(null);
     setStudentName(null);
   };
 
@@ -35,7 +43,7 @@ const App = () => {
             <Route
               path="/"
               element={
-                studentName ? (
+                authToken && studentName ? (
                   <Index studentName={studentName} onLogout={handleLogout} />
                 ) : (
                   <Navigate to="/login" replace />
@@ -45,13 +53,14 @@ const App = () => {
             <Route
               path="/login"
               element={
-                studentName ? (
+                authToken && studentName ? (
                   <Navigate to="/" replace />
                 ) : (
                   <Login onLogin={handleLogin} />
                 )
               }
             />
+            <Route path="/verify-email/:token" element={<VerifyEmail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

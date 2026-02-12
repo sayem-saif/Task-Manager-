@@ -54,7 +54,7 @@ const TaskCard = ({ task, onToggle, onDelete, onEdit }: TaskCardProps) => {
     <div
       className={`group relative rounded-2xl border-l-4 p-4 sm:p-5 transition-all duration-200 ${config.accent} ${config.glow} ${
         isOverdue && !task.completed
-          ? "border border-l-4 border-overdue-border bg-overdue-bg"
+          ? "border border-l-4 border-overdue-border bg-overdue-bg animate-pulse-subtle"
           : "glass shadow-card hover:shadow-md"
       } ${task.completed ? "opacity-55" : "hover:scale-[1.01]"}`}
     >
