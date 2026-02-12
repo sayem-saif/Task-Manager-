@@ -1,0 +1,44 @@
+name = "task-manager-api"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Workers configuration
+workers_dev = true
+route = ""
+zone_id = ""
+
+# Node.js compatibility for mongoose
+node_compat = true
+
+# Environment variables (set these in Cloudflare dashboard or via wrangler secret)
+# DO NOT commit actual secrets - this is just documentation
+# Run: wrangler secret put MONGODB_URI
+# Run: wrangler secret put JWT_SECRET
+# Run: wrangler secret put EMAIL_USER
+# Run: wrangler secret put EMAIL_PASSWORD
+
+[env.production]
+name = "task-manager-api"
+routes = [
+  { pattern = "api.yourdomain.com/*", zone_name = "yourdomain.com" }
+]
+
+# For development, you can use vars (NOT for secrets in production)
+[env.development]
+name = "task-manager-api-dev"
+
+# Uncomment and set for development only
+# [vars]
+# NODE_ENV = "development"
+
+# Build configuration
+[build]
+command = "npm install"
+
+[build.upload]
+format = "modules"
+main = "./worker.js"
+
+# Limits
+[limits]
+cpu_ms = 50

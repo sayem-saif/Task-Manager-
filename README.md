@@ -48,7 +48,8 @@ A full-stack, production-ready task management application designed for students
 
 ### Backend
 - **Node.js** - JavaScript runtime
-- **Express 4.18** - Web framework
+- **Express 4.18** - Web framework (local development)
+- **Hono** - Edge-optimized framework (Cloudflare Workers)
 - **MongoDB + Mongoose** - NoSQL database
 - **JWT** - Authentication tokens
 - **bcrypt** - Password hashing
@@ -123,6 +124,7 @@ Backend:  http://localhost:5000
 
 ## 📚 Documentation
 
+- **[CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md)** - ⭐ Deploy to Cloudflare (Recommended)
 - **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Deploy to Render + Vercel
 - **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Complete file structure
 - **[AUTHENTICATION_GUIDE.md](backend/AUTHENTICATION_GUIDE.md)** - Auth setup
@@ -151,30 +153,38 @@ DELETE /api/tasks/:id              Delete task
 
 ## 🌐 Deployment
 
-### Deploy Backend to Render
+### ⭐ Recommended: Deploy to Cloudflare (Pages + Workers)
+
+**100% free tier with global edge network!**
+
 ```bash
+# Backend (Cloudflare Workers)
+cd backend
+wrangler login
+npm run deploy
+
+# Frontend (Cloudflare Pages)
+# Connect GitHub repo via Cloudflare Dashboard
+# Auto-deploys on every push to main!
+```
+
+See **[CLOUDFLARE_DEPLOYMENT.md](CLOUDFLARE_DEPLOYMENT.md)** for complete step-by-step guide.
+
+### Alternative: Deploy to Render + Vercel
+
+```bash
+# Backend to Render
 1. Create account at render.com
 2. Connect GitHub repository
 3. Set root directory to "backend"
 4. Add environment variables
 5. Deploy!
-```
 
-### Deploy Frontend to Vercel
-```bash
-# Using Vercel CLI
-npm install -g vercel
+# Frontend to Vercel
 vercel --prod
-
-# Or use Vercel Dashboard
-1. Import project from GitHub
-2. Set build command: npm run build
-3. Set output directory: dist
-4. Add environment variables
-5. Deploy!
 ```
 
-See **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** for detailed instructions.
+See **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** for Render/Vercel instructions.
 
 ## 📁 Project Structure
 
