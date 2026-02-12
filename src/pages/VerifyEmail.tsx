@@ -39,7 +39,6 @@ const VerifyEmail = () => {
 
     verifyEmailToken();
   }, [token, navigate]);
-  }, [token, navigate]);
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-8">
