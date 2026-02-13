@@ -15,13 +15,24 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.CLIENT_URL] 
-    : [
-        process.env.CLIENT_URL || 'http://localhost:8080',
-        'http://localhost:8081',
-        'http://localhost:5173'
-      ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      process.env.CLIENT_URL,
+      'https://taskager.vercel.app',
+      'http://localhost:8080',
+      'http://localhost:5173'
+    ].filter(Boolean);
+    
+    // Check if origin ends with .vercel.app (for preview deployments)
+    if (origin.endsWith('.vercel.app') || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 app.use(express.json());
