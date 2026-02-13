@@ -5,7 +5,15 @@
 
 import apiClient from './client';
 
-const AUTH_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Detect if running on Vercel/production by checking hostname
+const isProduction = typeof window !== 'undefined' && 
+  (window.location.hostname.includes('vercel.app') || 
+   window.location.hostname.includes('task-manager'));
+
+// Use relative /api path in production, localhost in development
+const AUTH_BASE_URL = isProduction ? '/api' : 'http://localhost:5000/api';
+
+console.log('🔧 AUTH API Base URL:', AUTH_BASE_URL);
 
 export interface LoginCredentials {
   email: string;
