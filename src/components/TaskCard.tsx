@@ -62,9 +62,13 @@ const TaskCard = ({ task, onToggle, onDelete, onEdit }: TaskCardProps) => {
         {/* Checkbox */}
         <button
           onClick={() => onToggle(task.id)}
+          disabled={isOverdue && !task.completed}
+          title={isOverdue && !task.completed ? "Cannot complete overdue tasks - delete to maintain on-time completion record" : ""}
           className={`mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg border-2 transition-all duration-200 ${
             task.completed
               ? "border-primary gradient-primary shadow-sm"
+              : isOverdue && !task.completed
+              ? "border-destructive/30 bg-destructive/5 opacity-40 cursor-not-allowed"
               : "border-muted-foreground/25 hover:border-primary hover:scale-110 hover:shadow-sm"
           }`}
         >
@@ -110,6 +114,14 @@ const TaskCard = ({ task, onToggle, onDelete, onEdit }: TaskCardProps) => {
           )}
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
+            {/* OVERDUE badge - prominent */}
+            {isOverdue && !task.completed && (
+              <span className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-destructive text-destructive-foreground animate-pulse">
+                <AlertTriangle className="h-3 w-3" />
+                OVERDUE
+              </span>
+            )}
+
             {/* Priority badge */}
             <span className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${config.badge}`}>
               <span className={`h-1.5 w-1.5 rounded-full ${config.dot}`} />
