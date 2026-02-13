@@ -5,10 +5,15 @@
 
 import axios from 'axios';
 
+// Detect if running on Vercel/production by checking hostname
+const isProduction = typeof window !== 'undefined' && 
+  (window.location.hostname.includes('vercel.app') || 
+   window.location.hostname.includes('task-manager'));
+
 // Use relative /api path in production, localhost in development
-const API_BASE_URL = import.meta.env.PROD 
-  ? '/api' 
-  : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
+const API_BASE_URL = isProduction ? '/api' : 'http://localhost:5000/api';
+
+console.log('🔧 API Base URL:', API_BASE_URL);
 
 // Create axios instance
 const apiClient = axios.create({
