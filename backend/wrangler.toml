@@ -1,14 +1,10 @@
 name = "task-manager-api"
 main = "worker.js"
-compatibility_date = "2024-01-01"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
 
 # Workers configuration
 workers_dev = true
-route = ""
-zone_id = ""
-
-# Node.js compatibility for mongoose
-node_compat = true
 
 # Environment variables (set these in Cloudflare dashboard or via wrangler secret)
 # DO NOT commit actual secrets - this is just documentation
@@ -30,15 +26,3 @@ name = "task-manager-api-dev"
 # Uncomment and set for development only
 # [vars]
 # NODE_ENV = "development"
-
-# Build configuration
-[build]
-command = "npm install"
-
-[build.upload]
-format = "modules"
-main = "./worker.js"
-
-# Limits
-[limits]
-cpu_ms = 50

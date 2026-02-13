@@ -1,0 +1,9 @@
+# Vercel Environment Variables
+# Copy-paste these into Vercel Dashboard → Settings → Environment Variables
+
+# Production Environment Variables:
+MONGODB_URI=mongodb+srv://mdsayemsaif:kZNyp6hbwgF2GX4L@cluster0.qfbor5e.mongodb.net/taskager
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_2024_secure_random_string
+NODE_ENV=production
+CLIENT_URL=https://your-app.vercel.app
+VITE_API_URL=/api
